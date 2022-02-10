@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e9bd3f61ac7604198ce4b633f0861e, type: 3}
+  m_Name: Many Small Rooms
+  m_EditorClassIdentifier: 
+  CorridorLength: 12
+  CorridorCount: 20
+  RoomPercent: 0.6
+  RoomParameters: {fileID: 11400000, guid: 5066300feaffe444b8b81d9421a2776a, type: 2}
