@@ -11,7 +11,7 @@ public abstract class DungeonGenerator : MonoBehaviour
 
     public void GenerateDungeon()
     {
-        var floorPositions = this.RunGenerationAlgorithm(this.startPosition);
+        var floorPositions = this.RunGenerationAlgorithm();
         this.PaintDungeonTiles(floorPositions);
     }
 
@@ -27,5 +27,5 @@ public abstract class DungeonGenerator : MonoBehaviour
             Debug.Log(position);
     }
 
-    protected abstract HashSet<Vector2Int> RunGenerationAlgorithm(Vector2Int startPosition);
+    protected abstract HashSet<Vector2Int> RunGenerationAlgorithm();
 }
