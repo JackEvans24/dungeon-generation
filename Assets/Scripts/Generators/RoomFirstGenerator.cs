@@ -31,6 +31,14 @@ public class RoomFirstGenerator : RandomWalkGenerator
 
     private HashSet<Vector2Int> RoomAreasToPositions(List<BoundsInt> roomsList)
     {
+        if (this.randomWalkRooms)
+            return this.CreateRandomWalkRooms(roomsList);
+        else
+            return this.CreateSimpleRooms(roomsList);
+    }
+
+    private HashSet<Vector2Int> CreateSimpleRooms(List<BoundsInt> roomsList)
+    {
         var floorPositions = new HashSet<Vector2Int>();
         var offset = this.binarySpaceParameters.Offset;
 
@@ -49,10 +57,36 @@ public class RoomFirstGenerator : RandomWalkGenerator
         return floorPositions;
     }
 
+    private HashSet<Vector2Int> CreateRandomWalkRooms(List<BoundsInt> roomsList)
+    {
+        var floorPositions = new HashSet<Vector2Int>();
+        var offset = this.binarySpaceParameters.Offset;
+
+        foreach (var room in roomsList)
+        {
+            var roomCenter = this.GetRoomCenter(room);
+            var roomFloor = this.RunRandomWalk(this.roomParameters, roomCenter);
+
+            foreach (var position in roomFloor)
+            {
+                if (position.x < (room.xMin + offset) || position.x > (room.xMax - offset))
+                    continue;
+                if (position.y < (room.yMin + offset) || position.y > (room.yMax - offset))
+                    continue;
+
+                floorPositions.Add(position);
+            }
+        }
+
+        return floorPositions;
+    }
+
     private List<Vector2Int> GetRoomCenterPoints(List<BoundsInt> roomsList) =>
         roomsList
-            .Select(room => new Vector2Int(Mathf.RoundToInt(room.center.x), Mathf.RoundToInt(room.center.y)))
+            .Select(GetRoomCenter)
             .ToList();
+
+    private Vector2Int GetRoomCenter(BoundsInt room) => new Vector2Int(Mathf.RoundToInt(room.center.x), Mathf.RoundToInt(room.center.y));
 
     private HashSet<Vector2Int> ConnectRooms(List<Vector2Int> roomCenters)
     {

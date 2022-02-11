@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f05e5bc2686406942b994140387b7ebf, type: 3}
   m_Name: Island Small
   m_EditorClassIdentifier: 
-  iterations: 100
+  iterations: 50
   walkLength: 10
   randomIterationStart: 0
