@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4e9bd3f61ac7604198ce4b633f0861e, type: 3}
-  m_Name: Many Small Rooms
+  m_Script: {fileID: 11500000, guid: c8fca10b1aae5464d913d8d2661b93e0, type: 3}
+  m_Name: Filled Space
   m_EditorClassIdentifier: 
-  CorridorLength: 15
-  CorridorCount: 20
-  RoomPercent: 0.6
+  MinimumRoomDimensions: {x: 12, y: 12}
+  WorldSpace: {x: 50, y: 50}
+  Offset: 3
+  GuaranteeSplitRooms: 1
