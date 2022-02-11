@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class RandomWalkDungeonGenerator : DungeonGenerator
+public class RandomWalkGenerator : DungeonGenerator
 {
     [SerializeField] protected RandomWalkParameters roomParameters;
 

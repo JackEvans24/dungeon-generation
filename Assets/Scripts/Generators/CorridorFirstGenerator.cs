@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class CorridorFirstGenerator : RandomWalkDungeonGenerator
+public class CorridorFirstGenerator : RandomWalkGenerator
 {
     [Header("Corridor variables")]
     [SerializeField] protected CorridorFirstParameters corridorParameters;
