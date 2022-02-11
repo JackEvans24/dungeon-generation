@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class BinarySpacePartitioning
 {
-    public static List<BoundsInt> Generate(BoundsInt worldSpace, int minimumWidth, int minimumHeight)
+    public static List<BoundsInt> Generate(BoundsInt worldSpace, BinarySpacePartitionParameters parameters)
     {
         var roomsQueue = new Queue<BoundsInt>();
         var roomsList = new List<BoundsInt>();
@@ -13,20 +13,20 @@ public static class BinarySpacePartitioning
         while (roomsQueue.Count > 0)
         {
             var room = roomsQueue.Dequeue();
-            if (room.size.y < minimumHeight || room.size.x < minimumWidth)
+            if (parameters.RoomSmallerThanBoundary(room))
                 continue;
 
             List<BoundsInt> newRooms;
             var shouldPrioritiseHorizontal = Random.value < 0.5f;
-            var canSplitHorizontally = room.size.y >= minimumHeight * 2;
-            var canSplitVertically = room.size.x >= minimumWidth * 2;
+            var canSplitHorizontally = room.size.y >= parameters.MinimumHeight * 2;
+            var canSplitVertically = room.size.x >= parameters.MinimumWidth * 2;
 
             if (shouldPrioritiseHorizontal && canSplitHorizontally)
-                newRooms = SplitHorizontally(room, minimumHeight);
+                newRooms = SplitHorizontally(room, parameters);
             else if (canSplitVertically)
-                newRooms = SplitVertically(room, minimumWidth);
+                newRooms = SplitVertically(room, parameters);
             else if (canSplitHorizontally)
-                newRooms = SplitHorizontally(room, minimumHeight);
+                newRooms = SplitHorizontally(room, parameters);
             else
             {
                 roomsList.Add(room);
@@ -40,13 +40,12 @@ public static class BinarySpacePartitioning
         return roomsList;
     }
 
-    private static List<BoundsInt> SplitHorizontally(BoundsInt room, int minimumHeight)
+    private static List<BoundsInt> SplitHorizontally(BoundsInt room, BinarySpacePartitionParameters parameters)
     {
-        if (room.size.y < minimumHeight * 2)
+        if (room.size.y < parameters.MinimumHeight * 2)
             return new List<BoundsInt>();
 
-        //var ySplit = Random.Range(1, room.size.y);
-        var ySplit = Random.Range(minimumHeight, room.size.y - minimumHeight);
+        var ySplit = parameters.GetYSplit(room);
 
         var newRoom1 = new BoundsInt(room.min, new Vector3Int(room.size.x, ySplit, room.size.z));
         var newRoom2 = new BoundsInt(
@@ -57,13 +56,12 @@ public static class BinarySpacePartitioning
         return new List<BoundsInt>(new BoundsInt[] { newRoom1, newRoom2 });
     }
 
-    private static List<BoundsInt> SplitVertically(BoundsInt room, int minimumWidth)
+    private static List<BoundsInt> SplitVertically(BoundsInt room, BinarySpacePartitionParameters parameters)
     {
-        if (room.size.x < minimumWidth * 2)
+        if (room.size.x < parameters.MinimumWidth * 2)
             return new List<BoundsInt>();
 
-        //var xSplit = Random.Range(1, room.size.x);
-        var xSplit = Random.Range(minimumWidth, room.size.x - minimumWidth);
+        var xSplit = parameters.GetXSplit(room);
 
         var newRoom1 = new BoundsInt(room.min, new Vector3Int(xSplit, room.size.y, room.size.z));
         var newRoom2 = new BoundsInt(
